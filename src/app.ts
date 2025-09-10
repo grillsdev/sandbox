@@ -5,23 +5,27 @@ import morgan from "morgan";
 
 import type MessageResponse from "./interfaces/message-response.js";
 
-import api from "./api/index.js";
+import router from "./api/index.js";
 import * as middlewares from "./middlewares.js";
 
 const app = express();
 
 app.use(morgan("dev"));
 app.use(helmet());
-app.use(cors());
+app.use(
+  cors({
+    origin: "*"
+  })
+);
 app.use(express.json());
 
 app.get<object, MessageResponse>("/", (req, res) => {
   res.json({
-    message: "🦄🌈✨👋🌎🌍🌏✨🌈🦄",
+    message: "Hello World",
   });
 });
 
-app.use("/api/v1", api);
+app.use("/api/v1", router);
 
 app.use(middlewares.notFound);
 app.use(middlewares.errorHandler);
