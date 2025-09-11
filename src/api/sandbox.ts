@@ -1,6 +1,10 @@
 /* eslint-disable node/no-process-env */
 import { Sandbox } from '@e2b/code-interpreter'
+import dotenv from 'dotenv';
 import express from "express";
+
+dotenv.config();
+
 
 const router = express.Router();
 
