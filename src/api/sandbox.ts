@@ -35,7 +35,7 @@ router.post("/create", async (req, res) => {
             return;
         }
 
-        // const sandbox = sandboxList[0]
+        // if sandbox is in process of creating it; get the status and if it is started return //
         // template created for this repo (https://github.com/grillsdev/open-template)
         const sandbox = await Sandbox.create(process.env.SANDBOX_ID!, {
             apiKey: sandboxAPI,
@@ -47,11 +47,6 @@ router.post("/create", async (req, res) => {
         })
         await sandbox.files.write("/home/user/pages/generated-components.tsx", code)
         await sandbox.files.write("/home/user/styles/globals.css", css)
-        console.warn("Starting development server...")
-        sandbox.commands.run("npm run dev", {
-            cwd: "/home/user",
-            background: true
-        })
 
         const previewUrl = `https://${sandbox.getHost(3000)}`
         res.json({
